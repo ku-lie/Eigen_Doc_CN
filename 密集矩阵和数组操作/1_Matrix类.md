@@ -160,9 +160,9 @@ Here is the vector v:
 3
 ```
 
-注意，语法*m(index)*不限于向量，也可用于一般矩阵，这意味着元素数组中基于索引的访问。然而，这取决于矩阵的存储顺序。所有Eigen矩阵默认为列主存储顺序，但这可以更改为行主存储顺序，请参阅[存储顺序](../xxx.md)。
+注意，语法 *m(index)* 不限于向量，也可用于一般矩阵，这意味着元素数组中基于索引的访问。然而，这取决于矩阵的存储顺序。所有Eigen矩阵默认为列主存储顺序，但这可以更改为行主存储顺序，请参阅[存储顺序](../xxx.md)。
 
-对于向量中基于索引的访问，运算符 *[]* 也被重载，但请记住，C++不允许运算符 *[]* 接受多个参数。我们将运算符 *[]* 限制为向量，因为C++语言中的一个笨拙之处会使*matrix[i，j]*编译为与*matrix[j]*相同的东西！
+对于向量中基于索引的访问，运算符 *[]* 也被重载，但请记住，C++不允许运算符 *[]* 接受多个参数。我们将运算符 *[]* 限制为向量，因为C++语言中的一个笨拙之处会使 *matrix[i，j]* 编译为与 *matrix[j]* 相同的东西！
 
 ### 逗号初始化
 
@@ -222,7 +222,7 @@ The vector v is of size 5
 As a matrix, v is of size 5x1
 ```
 
-如果实际矩阵大小不变，则*resize()*方法为不能操作；否则它是破坏性的：元素的值可能会改变。如果您想要*resize()*的保守变体，它不会更改系数，请使用[conservativeResize()](../xxx.md)，有关详细信息，请参阅[这页](../xxx.md))。
+如果实际矩阵大小不变，则 *resize()* 方法为不能操作；否则它是破坏性的：元素的值可能会改变。如果您想要 *resize()* 的保守变体，它不会更改系数，请使用[conservativeResize()](../xxx.md)，有关详细信息，请参阅[这页](../xxx.md))。
 
 为了API的一致性，所有这些方法在固定大小的矩阵上仍然可用。当然，实际上不能调整固定大小矩阵的大小。试图将固定大小更改为实际不同的值将触发断言失败；但以下代码是合法的：
 
@@ -274,7 +274,7 @@ a is now of size 3x3
 
 ### 固定与动态大小
 
-什么时候应该使用固定大小（例如*Matrix4f*），什么时候应该选择动态大小（例如*MatrixXf*）？简单的答案是：在可能的情况下，对非常小的大小使用固定大小，对较大的大小或必须的地方使用动态大小。对于小大小，尤其是小于（大约）16的大小，使用固定大小对性能非常有利，因为它允许Eigen避免动态内存分配并展开循环。在内部，固定大小的Eigen矩阵只是一个普通阵列，即
+什么时候应该使用固定大小（例如 *Matrix4f* ），什么时候应该选择动态大小（例如 *MatrixXf* ）？简单的答案是：在可能的情况下，对非常小的大小使用固定大小，对较大的大小或必须的地方使用动态大小。对于小大小，尤其是小于（大约）16的大小，使用固定大小对性能非常有利，因为它允许Eigen避免动态内存分配并展开循环。在内部，固定大小的Eigen矩阵只是一个普通阵列，即
 
 ```cpp
 Matrix4f mymatrix;
@@ -298,7 +298,7 @@ MatrixXf mymatrix(rows,columns);
 float *mymatrix = new float[rows*columns];
 ```
 
-除此之外，*MatrixXf*对象将其行数和列数存储为成员变量。
+除此之外，*MatrixXf* 对象将其行数和列数存储为成员变量。
 
 当然，使用固定大小的限制是，只有在编译时知道大小时，才可能这样做。 此外，对于足够大的尺寸，例如大于（大约）32的尺寸，使用固定尺寸的性能优势变得微不足道。更糟糕的是，试图在函数中使用固定大小创建一个非常大的矩阵可能会导致堆栈溢出，因为Eigen会尝试将数组作为局部变量自动分配，这通常在堆栈上完成。最后，根据具体情况，当使用动态大小时，Eigen也可能更积极地尝试矢量化（使用SIMD指令），请参阅[矢量化](../xxx.md)。
 
@@ -315,13 +315,13 @@ Matrix<typename Scalar,
        int MaxColsAtCompileTime = ColsAtCompileTime>
 ```
 
-选项是位字段。在这里，我们只讨论一点：*RowMajor*。它指定这种类型的矩阵使用行主存储顺序；默认情况下，存储顺序为列主顺序。请参阅[存储顺序](../xxx.md)页面。例如，这种类型表示行主3x3矩阵：
+选项是位字段。在这里，我们只讨论一点： *RowMajor* 。它指定这种类型的矩阵使用行主存储顺序；默认情况下，存储顺序为列主顺序。请参阅[存储顺序](../xxx.md)页面。例如，这种类型表示行主3x3矩阵：
 
 ```cpp
 Matrix<float, 3, 3, RowMajor>
 ```
 
-*MaxRowsAtCompileTime*和*MaxColsAtCompileTime*在指定以下内容时非常有用：即使矩阵的确切大小在编译时未知，但在编译时已知固定的上界。您可能希望这样做的最大原因是避免动态内存分配。例如，以下矩阵类型使用12个浮点的普通数组，没有动态内存分配：
+*MaxRowsAtCompileTime* 和 *MaxColsAtCompileTime* 在指定以下内容时非常有用：即使矩阵的确切大小在编译时未知，但在编译时已知固定的上界。您可能希望这样做的最大原因是避免动态内存分配。例如，以下矩阵类型使用12个浮点的普通数组，没有动态内存分配：
 
 ```cpp
 Matrix<float, Dynamic, Dynamic, 0, 3, 4>
@@ -330,11 +330,11 @@ Matrix<float, Dynamic, Dynamic, 0, 3, 4>
 ### 方便的类型定义
 
 Eigen定义了以下矩阵类型：
-* *MatrixNt*表示*Matrix<type, N, N>*。例如，*MatrixXi*表示 *Matrix<int，Dynamic，Dynamic>*。
-* *MatrixXNt*表示*Matrix<type, Dynamic, N>*。例如, *MatrixX3i* 表示*Matrix<int, Dynamic, 3>*。
-* *MatrixNXt*表示*Matrix<type, N, Dynamic>*。例如, *Matrix4Xd*表示*Matrix<d, 4, Dynamic>*。
-* *VectorNt*表示*Matrix<type, N, 1>*。例如, *Vector2f*表示 *Matrix<float, 2, 1>*。
-* *RowVectorNt*表示*Matrix<type, 1, N>*。例如, *RowVector3d*表示*Matrix<double, 1, 3>*。
+* *MatrixNt* 表示 *Matrix<type, N, N>* 。例如，*MatrixXi* 表示 *Matrix<int，Dynamic，Dynamic>* 。
+* *MatrixXNt* 表示 *Matrix<type, Dynamic, N>* 。例如, *MatrixX3i* 表示 *Matrix<int, Dynamic, 3>* 。
+* *MatrixNXt* 表示 *Matrix<type, N, Dynamic>* 。例如, *Matrix4Xd* 表示 *Matrix<d, 4, Dynamic>* 。
+* *VectorNt* 表示 *Matrix<type, N, 1>* 。例如,  *Vector2f* 表示 *Matrix<float, 2, 1>* 。
+* *RowVectorNt* 表示 *Matrix<type, 1, N>* 。例如, *RowVector3d* 表示 *Matrix<double, 1, 3>* 。
 在上文：
-* *N*可以是*2*、*3*、*4*或*X*（表示动态）中的任意一个。
-* *t*可以是*i*（表示*int*）、*f*（表示*float*）、*d*（表示*double*）、*cf*（表示*complex<float>*）或*cd*（表示*complex<double>*）。*TypeDef*仅为这五种类型定义，这并不意味着它们是唯一受支持的标量类型。 例如，支持所有标准整数类型，请参阅[标量类型](../xxx.md)。
+* *N* 可以是 *2*、 *3* 、 *4* 或 *X* （表示动态）中的任意一个。
+* *t* 可以是 *i* （表示 *int* ）、*f* （表示 *float* ）、 *d* （表示 *double* ）、 *cf* （表示 *complex<float>* ）或 *cd* （表示 *complex<double>* ）。 *TypeDef* 仅为这五种类型定义，这并不意味着它们是唯一受支持的标量类型。 例如，支持所有标准整数类型，请参阅[标量类型](../xxx.md)。
