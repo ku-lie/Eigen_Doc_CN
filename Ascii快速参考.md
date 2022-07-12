@@ -99,16 +99,16 @@ R.col(j1).swap(mat1.col(j2));      // R(:, [j1 j2]) = R(:, [j2, j1])
 /******************************************************************************/
 // Eigen                           // Matlab
 R.adjoint()                        // R'
-R.transpose()                      // R.' or conj(R')       // Read-write
-R.diagonal()                       // diag(R)               // Read-write
+R.transpose()                      // R.' or conj(R')       // 读写
+R.diagonal()                       // diag(R)               // 读写
 x.asDiagonal()                     // diag(x)
-R.transpose().colwise().reverse()  // rot90(R)              // Read-write
+R.transpose().colwise().reverse()  // rot90(R)              // 读写
 R.rowwise().reverse()              // fliplr(R)
 R.colwise().reverse()              // flipud(R)
 R.replicate(i,j)                   // repmat(P,i,j)
 
 
-// All the same as Matlab, but matlab doesn't have *= style operators.
+// 与Matlab相同，但matlab没有*=样式运算符。
 // Matrix-vector.  Matrix-matrix.   Matrix-scalar.
 y  = M*x;          R  = P*Q;        R  = P*s;
 a  = b*M;          R  = P - Q;      R  = s*P;
@@ -117,7 +117,7 @@ a *= M;            R  = P + Q;      R  = P/s;
                    R += Q;          R *= s;
                    R -= Q;          R /= s;
 
-// Vectorized operations on each element independently
+// 对每个元素独立进行矢量化操作
 // Eigen                       // Matlab
 R = P.cwiseProduct(Q);         // R = P .* Q
 R = P.array() * s.array();     // R = P .* s
@@ -153,7 +153,7 @@ R = (Q.array()==0).select(P,R) // R(Q==0) = P(Q==0)
 R = P.unaryExpr(ptr_fun(func)) // R = arrayfun(func, P)   // with: scalar func(const scalar &x);
 
 
-// Reductions.
+// 减少。
 int r, c;
 // Eigen                  // Matlab
 R.minCoeff()              // min(R(:))
@@ -174,36 +174,36 @@ R.any()                   // any(R(:))
 R.colwise().any()         // any(R)
 R.rowwise().any()         // any(R, 2)
 
-// Dot products, norms, etc.
+// 点乘，归一化等
 // Eigen                  // Matlab
-x.norm()                  // norm(x).    Note that norm(R) doesn't work in Eigen.
-x.squaredNorm()           // dot(x, x)   Note the equivalence is not true for complex
+x.norm()                  // norm(x).    请注意，norm(R)在 Eigen 中不起作用。
+x.squaredNorm()           // dot(x, x)   请注意，对于复数，等价性不成立
 x.dot(y)                  // dot(x, y)
-x.cross(y)                // cross(x, y) Requires #include <Eigen/Geometry>
+x.cross(y)                // cross(x, y) 需要#include <Eigen/Geometry>
 
-//// Type conversion
+//// 类型转换
 // Eigen                  // Matlab
 A.cast<double>();         // double(A)
 A.cast<float>();          // single(A)
 A.cast<int>();            // int32(A)
 A.real();                 // real(A)
 A.imag();                 // imag(A)
-// if the original type equals destination type, no work is done
+// 如果原始类型等于目标类型，则不执行任何工作
 
-// Note that for most operations Eigen requires all operands to have the same type:
+// 请注意，对于大多数操作，Eigen要求所有操作数具有相同的类型：
 MatrixXf F = MatrixXf::Zero(3,3);
-A += F;                // illegal in Eigen. In Matlab A = A+F is allowed
-A += F.cast<double>(); // F converted to double and then added (generally, conversion happens on-the-fly)
+A += F;                // 在Eigen中是非法的。在 Matlab 中，A = A+F 是允许的
+A += F.cast<double>(); // F转换为双精度，然后相加（通常，转换即时发生）
 
-// Eigen can map existing memory into Eigen matrices.
+// Eigen可以将现有内存映射到Eigen矩阵中。
 float array[3];
-Vector3f::Map(array).fill(10);            // create a temporary Map over array and sets entries to 10
+Vector3f::Map(array).fill(10);            // 创建基于数组的临时映射并将条目设置为 10
 int data[4] = {1, 2, 3, 4};
-Matrix2i mat2x2(data);                    // copies data into mat2x2
-Matrix2i::Map(data) = 2*mat2x2;           // overwrite elements of data with 2*mat2x2
-MatrixXi::Map(data, 2, 2) += mat2x2;      // adds mat2x2 to elements of data (alternative syntax if size is not know at compile time)
+Matrix2i mat2x2(data);                    // 将数据复制到 mat2x2 中
+Matrix2i::Map(data) = 2*mat2x2;           // 用 2*mat2x2 覆盖数据元素
+MatrixXi::Map(data, 2, 2) += mat2x2;      // 将 mat2x2 添加到数据元素(如果在编译时不知道大小，则为替代语法）
 
-// Solve Ax = b. Result stored in x. Matlab: x = A \ b.
+// 求解 Ax = b。结果存储在 x 中。Matlab： x = A \ b.
 x = A.ldlt().solve(b));  // A sym. p.s.d.    #include <Eigen/Cholesky>
 x = A.llt() .solve(b));  // A sym. p.d.      #include <Eigen/Cholesky>
 x = A.lu()  .solve(b));  // Stable and fast. #include <Eigen/LU>
@@ -215,10 +215,11 @@ x = A.svd() .solve(b));  // Stable, slowest. #include <Eigen/SVD>
 // .qr()   -> .matrixQ() and .matrixR()
 // .svd()  -> .matrixU(), .singularValues(), and .matrixV()
 
-// Eigenvalue problems
+// 特征值问题
 // Eigen                          // Matlab
 A.eigenvalues();                  // eig(A);
 EigenSolver<Matrix3d> eig(A);     // [vec val] = eig(A)
 eig.eigenvalues();                // diag(val)
 eig.eigenvectors();               // vec
-// For self-adjoint matrices use SelfAdjointEigenSolver<>
+// 对于自伴随矩阵使用 SelfAdjointEigenSolver<>
+```
