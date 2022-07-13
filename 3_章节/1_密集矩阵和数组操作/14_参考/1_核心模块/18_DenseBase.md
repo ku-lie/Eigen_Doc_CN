@@ -1,7 +1,13 @@
-## Eigen:: DenseBase< Derived > 类模板参考
-
-### 成员函数文档
-
 #### Constant() [2/3]
-#### Random [2/3]
+#### LinSpaced() [4/4]
+#### maxCoeff() [1/3]
+#### minCoeff() [1/3]
+#### prod()
+#### Random() [1/3]
+#### Random() [2/3]
+#### setLinSpaced() [2/2]
+#### setZero()
+#### sum()
 #### transpose() [1/2]
+#### transposeInPlace()
+#### Zero() [1/3]

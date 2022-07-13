@@ -222,7 +222,7 @@ The vector v is of size 5
 As a matrix, v is of size 5x1
 ```
 
-如果实际矩阵大小不变，则 *resize()* 方法为不能操作；否则它是破坏性的：元素的值可能会改变。如果您想要 *resize()* 的保守变体，它不会更改系数，请使用[conservativeResize()](14_参考/1_核心模块/43_PlainObjectBase.md#conservativeresize-14)，有关详细信息，请参阅[这页](../../8_其他/调整大小.md))。
+如果实际矩阵大小不变，则 *resize()* 方法为不能操作；否则它是破坏性的：元素的值可能会改变。如果您想要 *resize()* 的保守变体，它不会更改元素，请使用[conservativeResize()](14_参考/1_核心模块/43_PlainObjectBase.md#conservativeresize-14)，有关详细信息，请参阅[这页](../../8_其他/调整大小.md))。
 
 为了API的一致性，所有这些方法在固定大小的矩阵上仍然可用。当然，实际上不能调整固定大小矩阵的大小。试图将固定大小更改为实际不同的值将触发断言失败；但以下代码是合法的：
 
