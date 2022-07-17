@@ -15,7 +15,7 @@ Map<Matrix<typename Scalar, int RowsAtCompileTime, int ColsAtCompileTime> >
 ```
 
 请注意，在此默认情况下，Map 只需要一个模板参数。
-要构造 Map 变量，您需要另外两条信息：指向定义系数数组的内存区域的指针，以及矩阵或向量的所需形状。例如，若要定义在编译时确定大小的浮点数矩阵，可以执行以下操作：
+要构造 Map 变量，您需要另外两条信息：指向定义元素数组的内存区域的指针，以及矩阵或向量的所需形状。例如，若要定义在编译时确定大小的浮点数矩阵，可以执行以下操作：
 
 ```cpp
 Map<MatrixXf> mf(pf,rows,columns);
